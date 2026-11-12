@@ -9,6 +9,7 @@ Pages: Home, Find Best Crop, Farmer Schemes. The page and the language are kept 
 app/texts.py and the schemes are in app/schemes.py.
 """
 
+import base64
 import sys
 from pathlib import Path
 
@@ -21,7 +22,7 @@ sys.path.insert(0, str(ROOT / "app"))
 
 from src.predict import districts, predict_yields, recommend_crops, seasons  # noqa: E402
 from schemes import SCHEMES  # noqa: E402
-from texts import CROPS, LANGUAGES, RIGHT_TO_LEFT, crop_name, district_name, pick, season_name, t  # noqa: E402
+from texts import LANGUAGES, RIGHT_TO_LEFT, crop_name, district_name, pick, season_name, t  # noqa: E402
 
 HECTARES_PER_ACRE = 0.4047
 TONNES_PER_HA_PER_QUINTAL_PER_ACRE = 0.1 / HECTARES_PER_ACRE
@@ -30,6 +31,8 @@ SEASON_ORDER = ["Kharif", "Rabi", "Summer", "Whole Year"]
 TOP_CROPS = 3
 PAGES = ["home", "crops", "schemes"]
 YEARS_OF_RECORDS = 27
+IMAGE_FOLDER = ROOT / "app" / "images" / "schemes"
+IMAGE_TYPES = {".jpg": "image/jpeg", ".png": "image/png", ".svg": "image/svg+xml"}
 
 GREEN, DARK_GREEN, PALE_GREEN = "#15803d", "#14532d", "#ecfdf3"
 AMBER, PALE_AMBER, NAVY, SAFFRON = "#b45309", "#fff7ed", "#1e3a5f", "#ff9933"
@@ -105,17 +108,12 @@ h3 {{ color: {DARK_GREEN}; border-bottom: 3px solid {GREEN}; padding-bottom: 4px
 .kd-scheme {{ position: relative; overflow: hidden; display: block; height: 230px; background: #ffffff; border: 1px solid #d1d5db;
               border-top: 6px solid {GREEN}; border-radius: 10px; color: #111827 !important;
               transition: box-shadow 0.2s, transform 0.2s; }}
-.kd-scene {{ position: relative; overflow: hidden; height: 140px; }}
-.kd-scene::before, .kd-scene::after {{ content: ""; position: absolute; border-radius: 50%; }}
-.kd-scene::before {{ left: -30%; width: 110%; bottom: -70px; height: 120px; opacity: 0.55; }}
-.kd-scene::after {{ left: 10%; width: 120%; bottom: -84px; height: 120px; }}
-.kd-scene span {{ position: absolute; z-index: 1; line-height: 1; }}
-.kd-scene .kd-main {{ font-size: 3.6rem; left: 18px; bottom: 22px; }}
-.kd-scene .kd-side {{ font-size: 2.4rem; right: 18px; top: 14px; }}
-.kd-scene .kd-row {{ font-size: 1.3rem; right: 10px; bottom: 4px; letter-spacing: 6px; }}
-.kd-scene-wide {{ height: 170px; border-radius: 8px; margin-bottom: 14px; }}
-.kd-scene-wide .kd-main {{ font-size: 4.6rem; left: 30px; }}
-.kd-scene-wide .kd-side {{ font-size: 3rem; right: 30px; }}
+.kd-pic {{ height: 140px; background-color: {PALE_GREEN}; background-repeat: no-repeat; background-position: center;
+           background-size: cover; display: flex; align-items: center; justify-content: center; font-size: 3.4rem; }}
+.kd-pic-contain {{ background-color: #ffffff; background-size: contain; background-origin: content-box; padding: 16px;
+                   border-bottom: 1px solid #e5e7eb; }}
+.kd-pic-wide {{ height: 240px; border-radius: 8px; margin-bottom: 6px; }}
+.kd-credit {{ color: #6b7280; font-size: 0.8rem; margin-bottom: 12px; }}
 .kd-scheme:hover {{ box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); transform: translateY(-3px); }}
 .kd-scheme-icon {{ width: 64px; height: 64px; border-radius: 50%; background: {PALE_GREEN}; border: 2px solid #bbf7d0;
                    display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 14px; }}
@@ -137,10 +135,6 @@ div.stButton > button:hover, div.stButton > button:focus {{ background: {DARK_GR
 label, .stRadio p, .stCheckbox p {{ font-size: 1.02rem !important; }}
 </style>
 """
-SCENE_STYLE = "<style>" + "".join(
-    f'.kd-scene-{item["id"]} {{ background: linear-gradient({item["scene"]["sky"]}, {item["scene"]["sky_low"]}); }}'
-    f'.kd-scene-{item["id"]}::before, .kd-scene-{item["id"]}::after {{ background: {item["scene"]["ground"]}; }}'
-    for item in SCHEMES) + "</style>"
 
 
 def html(markup: str) -> None:
@@ -173,7 +167,7 @@ def warning_box(lang: str) -> str:
 
 def header(page: str, lang: str) -> None:
     """The top of every page: language box, brand and navigation bar."""
-    html(f'<div class="kd-strip"><span>{t("strip", lang)}</span><span>{t("not_official", lang)}</span></div>'
+    html(f'<div class="kd-strip"><span>{t("strip", lang)}</span></div>'
          '<div class="kd-tricolour"></div>')
     brand, language_box = st.columns([4, 1])
     with language_box:
@@ -194,8 +188,7 @@ def home_page(lang: str) -> None:
     html(f'<div class="kd-hero"><h1>{t("hero_title", lang)}</h1><p>{t("hero_text", lang)}</p>'
          f'<a class="kd-btn kd-btn-light" href="{link("crops", lang)}" target="_self">{t("btn_crops", lang)}</a>'
          f'<a class="kd-btn kd-btn-line" href="{link("schemes", lang)}" target="_self">{t("btn_schemes", lang)}</a></div>')
-    stats = [(len(districts()), "stat_districts"), (len(CROPS), "stat_crops"),
-             (YEARS_OF_RECORDS, "stat_years"), (len(LANGUAGES), "stat_languages")]
+    stats = [(len(districts()), "stat_districts"), (YEARS_OF_RECORDS, "stat_years"), (len(LANGUAGES), "stat_languages")]
     html('<div class="kd-stats">' + "".join(f'<div class="kd-stat"><b>{number}</b><span>{t(key, lang)}</span></div>'
                                             for number, key in stats) + "</div>")
     html(f'<div class="kd-section"><h2>{t("about_title", lang)}</h2><p>{t("about_text", lang)}</p></div>')
@@ -324,22 +317,39 @@ def crops_page(lang: str) -> None:
          f'<li>{t("read_3", lang)}</li></ol></div>')
 
 
-def scene(item: dict, wide: bool = False) -> str:
-    """The drawn picture of a scheme: sky, two hills and three symbols."""
-    picture = item["scene"]
-    return (f'<div class="kd-scene kd-scene-{item["id"]}{" kd-scene-wide" if wide else ""}">'
-            f'<span class="kd-main">{picture["main"]}</span><span class="kd-side">{picture["side"]}</span>'
-            f'<span class="kd-row">{picture["row"] * 4}</span></div>')
+@st.cache_data
+def picture_style() -> str:
+    """One CSS class per scheme image, with the image file placed inside the page."""
+    rules = []
+    for item in SCHEMES:
+        path = IMAGE_FOLDER / item.get("image", "-")
+        if path.is_file() and path.suffix in IMAGE_TYPES:
+            data = base64.b64encode(path.read_bytes()).decode()
+            rules.append(f'.kd-pic-{item["id"]} {{ background-image: url("data:{IMAGE_TYPES[path.suffix]};base64,{data}"); }}')
+    return "<style>" + "".join(rules) + "</style>"
+
+
+def picture(item: dict, wide: bool = False) -> str:
+    """The scheme's image, or its icon on a plain band when it has no image file."""
+    has_image = (IMAGE_FOLDER / item.get("image", "-")).is_file()
+    classes = ["kd-pic", f'kd-pic-{item["id"]}']
+    if has_image and item.get("fit") == "contain":
+        classes.append("kd-pic-contain")
+    if wide:
+        classes.append("kd-pic-wide")
+    return f'<div class="{" ".join(classes)}">{"" if has_image else item["icon"]}</div>'
 
 
 def schemes_page(lang: str, chosen: str | None) -> None:
-    html(SCENE_STYLE)
+    html(picture_style())
     scheme = next((item for item in SCHEMES if item["id"] == chosen), None)
     if scheme is not None:
         html(f'<a class="kd-btn kd-btn-green" href="{link("schemes", lang)}" target="_self">{t("scheme_back", lang)}</a>')
         parts = "".join(f'<b>{t(key, lang)}</b>{pick(scheme[field], lang)}'
                         for key, field in [("scheme_benefit", "benefit"), ("scheme_who", "who"), ("scheme_how", "how")])
-        html(f'<div class="kd-section kd-detail">{scene(scheme, wide=True)}<div class="kd-detail-head">'
+        credit = (f'<div class="kd-credit">{t("image_source", lang)}: {scheme["credit"]}</div>'
+                  if (IMAGE_FOLDER / scheme.get("image", "-")).is_file() else "")
+        html(f'<div class="kd-section kd-detail">{picture(scheme, wide=True)}{credit}<div class="kd-detail-head">'
              f'<h2>{pick(scheme["name"], lang)}</h2></div><p>{pick(scheme["short"], lang)}</p>{parts}</div>')
         st.link_button(f'{t("scheme_visit", lang)}: {scheme["url"]}', scheme["url"], type="primary", width="stretch")
         html(f'<div class="kd-warning"><div class="kd-sign">⚠️</div><div>{t("schemes_note", lang)}</div></div>')
@@ -348,7 +358,7 @@ def schemes_page(lang: str, chosen: str | None) -> None:
     st.markdown(f"### {t('schemes_title', lang)}")
     cards = "".join(
         f'<a class="kd-scheme" href="{link("schemes", lang, scheme=item["id"])}" target="_self">'
-        f'{scene(item)}<div class="kd-scheme-name">{pick(item["name"], lang)}</div>'
+        f'{picture(item)}<div class="kd-scheme-name">{pick(item["name"], lang)}</div>'
         f'<div class="kd-slide"><div><b>{pick(item["name"], lang)}</b><p>{pick(item["short"], lang)}</p></div>'
         f'<span>{t("scheme_more", lang)}</span></div></a>' for item in SCHEMES)
     html(f'<div class="kd-schemes">{cards}</div>')

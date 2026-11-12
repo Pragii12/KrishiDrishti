@@ -13,3 +13,6 @@ district_crop_production.csv
 # Secrets
 .env
 .streamlit/secrets.toml
+
+# Scheme image supplied locally (third-party picture, not for the public repository)
+app/images/schemes/pmkisan.jpg

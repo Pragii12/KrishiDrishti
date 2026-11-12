@@ -87,3 +87,11 @@ Card scheme (soil), Government of India MSP notifications.
 - Potato prices are predicted poorly; 18 crops have a yield but no price.
 - The crop lists for saline and alkaline soil sensitivity were typed in and are not yet verified.
 - Yield is predicted for 2025-26, price and cost for 2026-27.
+
+## Scheme images
+
+The images on the Farmer Schemes page are in `app/images/schemes/` and come from the official
+websites of the schemes (pmfby.gov.in, fasalrin.gov.in, soilhealth.dac.gov.in, pdmc.da.gov.in,
+pmkusum.mnre.gov.in, enam.gov.in); the source is shown under each image. A scheme with no image
+file shows its icon. To add or change an image, put the file in that folder and set `image`,
+`fit` and `credit` for the scheme in `app/schemes.py`.
