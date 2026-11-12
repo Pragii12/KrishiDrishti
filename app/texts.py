@@ -1,7 +1,7 @@
 """All words shown by the application, in every language it offers.
 
-To add a language: add it to LANGUAGES and give every key in TEXT a value for it.
-Bhojpuri and Awadhi fall back to Hindi for crop, season and district names.
+To add a language: add it to LANGUAGES and give the keys in TEXT a value for it.
+A key with no Bhojpuri or Awadhi value is shown in Hindi; crop, season and district names too.
 """
 
 LANGUAGES = {"en": "English", "hi": "हिन्दी", "ur": "اردو", "bho": "भोजपुरी", "awa": "अवधी"}
@@ -204,6 +204,86 @@ TEXT = {
     },
 }
 
+TEXT.update({
+    "strip": {"en": "Crop advisory for the farmers of Uttar Pradesh", "hi": "उत्तर प्रदेश के किसानों के लिए फसल सलाह",
+              "ur": "اتر پردیش کے کسانوں کے لیے فصل مشورہ"},
+    "not_official": {"en": "Student prototype. Not an official Government website.",
+                     "hi": "विद्यार्थी द्वारा बनाया नमूना। यह सरकारी वेबसाइट नहीं है।",
+                     "ur": "طالب علم کا بنایا نمونہ۔ یہ سرکاری ویب سائٹ نہیں ہے۔"},
+    "nav_home": {"en": "Home", "hi": "मुख्य पृष्ठ", "ur": "مرکزی صفحہ"},
+    "nav_crops": {"en": "Find Best Crop", "hi": "सबसे अच्छी फसल जानें", "ur": "بہترین فصل جانیں"},
+    "nav_schemes": {"en": "Farmer Schemes", "hi": "किसान योजनाएँ", "ur": "کسان اسکیمیں"},
+    "hero_title": {"en": "Know which crop can earn more, before you sow",
+                   "hi": "बुवाई से पहले जानें, कौन सी फसल ज़्यादा कमाई देगी",
+                   "ur": "بوائی سے پہلے جانیں، کون سی فصل زیادہ کمائی دے گی"},
+    "hero_text": {"en": "KrishiDrishti compares the crops of your district and season and shows the three that are likely to give the most profit.",
+                  "hi": "कृषि दृष्टि आपके ज़िले और मौसम की फसलों की तुलना करके वे तीन फसलें दिखाता है जिनसे सबसे ज़्यादा मुनाफ़े की उम्मीद है।",
+                  "ur": "کرشی درشٹی آپ کے ضلع اور موسم کی فصلوں کا موازنہ کر کے وہ تین فصلیں دکھاتا ہے جن سے سب سے زیادہ منافع کی امید ہے۔"},
+    "btn_crops": {"en": "Find the best crop", "hi": "सबसे अच्छी फसल जानें", "ur": "بہترین فصل جانیں"},
+    "btn_schemes": {"en": "See farmer schemes", "hi": "किसान योजनाएँ देखें", "ur": "کسان اسکیمیں دیکھیں"},
+    "stat_districts": {"en": "Districts of Uttar Pradesh", "hi": "उत्तर प्रदेश के ज़िले", "ur": "اتر پردیش کے اضلاع"},
+    "stat_crops": {"en": "Crops compared", "hi": "फसलों की तुलना", "ur": "فصلوں کا موازنہ"},
+    "stat_years": {"en": "Years of farm records studied", "hi": "साल के खेती के आँकड़े", "ur": "سال کے زرعی اعداد"},
+    "stat_languages": {"en": "Languages", "hi": "भाषाएँ", "ur": "زبانیں"},
+    "about_title": {"en": "What is KrishiDrishti?", "hi": "कृषि दृष्टि क्या है?", "ur": "کرشی درشٹی کیا ہے؟"},
+    "about_text": {"en": "KrishiDrishti is a prototype crop advisory tool. It studies past government records of crop yield, mandi prices, weather, soil and the cost of cultivation, and estimates how much each crop may earn on your land in the coming season.",
+                   "hi": "कृषि दृष्टि फसल सलाह का एक नमूना साधन है। यह पैदावार, मंडी भाव, मौसम, मिट्टी और खेती के ख़र्च के पुराने सरकारी आँकड़ों का अध्ययन करके अनुमान लगाता है कि आने वाले मौसम में आपकी ज़मीन पर कौन सी फसल कितनी कमाई दे सकती है।",
+                   "ur": "کرشی درشٹی فصل مشورے کا ایک نمونہ آلہ ہے۔ یہ پیداوار، منڈی بھاؤ، موسم، مٹی اور کھیتی کے خرچ کے پرانے سرکاری اعداد کا مطالعہ کر کے اندازہ لگاتا ہے کہ آنے والے موسم میں آپ کی زمین پر کون سی فصل کتنی کمائی دے سکتی ہے۔"},
+    "works_title": {"en": "How it works", "hi": "यह कैसे काम करता है", "ur": "یہ کیسے کام کرتا ہے"},
+    "works_1_title": {"en": "You tell us about your farm", "hi": "आप अपने खेत के बारे में बताते हैं", "ur": "آپ اپنے کھیت کے بارے میں بتاتے ہیں"},
+    "works_1_text": {"en": "District, season, land size and whether you can water the field.",
+                     "hi": "ज़िला, मौसम, ज़मीन का आकार और सिंचाई हो सकती है या नहीं।",
+                     "ur": "ضلع، موسم، زمین کا رقبہ اور آبپاشی ہو سکتی ہے یا نہیں۔"},
+    "works_2_title": {"en": "The computer studies past years", "hi": "कंप्यूटर पिछले सालों का अध्ययन करता है", "ur": "کمپیوٹر پچھلے سالوں کا مطالعہ کرتا ہے"},
+    "works_2_text": {"en": "It estimates the yield, the selling price and the cost of every crop.",
+                     "hi": "यह हर फसल की पैदावार, बिक्री भाव और ख़र्च का अनुमान लगाता है।",
+                     "ur": "یہ ہر فصل کی پیداوار، فروخت بھاؤ اور خرچ کا اندازہ لگاتا ہے۔"},
+    "works_3_title": {"en": "You see the three best crops", "hi": "आपको तीन सबसे अच्छी फसलें दिखती हैं", "ur": "آپ کو تین بہترین فصلیں دکھتی ہیں"},
+    "works_3_text": {"en": "With the expected profit in a bad year and in a good year.",
+                     "hi": "ख़राब साल और अच्छे साल के अनुमानित मुनाफ़े के साथ।",
+                     "ur": "خراب سال اور اچھے سال کے متوقع منافع کے ساتھ۔"},
+    "warn_title": {"en": "Please note: this is only an estimate", "hi": "कृपया ध्यान दें: यह केवल एक अनुमान है",
+                   "ur": "براہ کرم توجہ دیں: یہ صرف ایک اندازہ ہے", "bho": "ध्यान दीं: ई खाली एगो अनुमान बा",
+                   "awa": "ध्यान देव: ई खाली एक अनुमान है"},
+    "warn_text": {"en": "These recommendations are made by a computer model from past records, for knowledge and information only. The model can be wrong and is not responsible for any loss. Treat it as a suggestion: decide with your own experience and the advice of your Krishi Vigyan Kendra or agriculture officer.",
+                  "hi": "ये सुझाव एक कंप्यूटर मॉडल ने पुराने आँकड़ों से बनाए हैं और केवल जानकारी के लिए हैं। मॉडल ग़लत हो सकता है और किसी नुक़सान के लिए ज़िम्मेदार नहीं है। इसे एक सुझाव मानें: फ़ैसला अपने अनुभव और कृषि विज्ञान केंद्र या कृषि अधिकारी की सलाह से करें।",
+                  "ur": "یہ مشورے ایک کمپیوٹر ماڈل نے پرانے اعداد سے بنائے ہیں اور صرف معلومات کے لیے ہیں۔ ماڈل غلط ہو سکتا ہے اور کسی نقصان کا ذمہ دار نہیں ہے۔ اسے ایک مشورہ سمجھیں: فیصلہ اپنے تجربے اور کرشی وگیان کیندر یا زرعی افسر کے مشورے سے کریں۔",
+                  "bho": "ई सुझाव एगो कंप्यूटर मॉडल पुरान आँकड़ा से बनवले बा आ खाली जानकारी खातिर बा। मॉडल गलत हो सकेला आ कवनो नुकसान के जिम्मेदार नइखे। एकरा के एगो सुझाव मानीं: फैसला आपन अनुभव आ कृषि विज्ञान केंद्र भा कृषि अधिकारी के सलाह से करीं।",
+                  "awa": "ई सुझाव एक कंप्यूटर मॉडल पुरान आँकड़न से बनाइस है अउर खाली जानकारी खातिर है। मॉडल गलत होइ सकत है अउर कउनो नुकसान कै जिम्मेदार नाहीं है। एहिका एक सुझाव मानौ: फैसला आपन अनुभव अउर कृषि विज्ञान केंद्र या कृषि अधिकारी कै सलाह से करौ।"},
+    "year_title": {"en": "What do bad year and good year mean?", "hi": "ख़राब साल और अच्छा साल का क्या मतलब है?",
+                   "ur": "خراب سال اور اچھا سال کا کیا مطلب ہے؟", "bho": "खराब साल आ बढ़िया साल के का मतलब बा?",
+                   "awa": "खराब साल अउर नीक साल कै का मतलब है?"},
+    "year_bad": {"en": "The rain is poor, pests attack, or the mandi price falls. Your profit may drop to about this amount.",
+                 "hi": "बारिश कम हो, कीट लग जाएँ या मंडी भाव गिर जाए। तब मुनाफ़ा घटकर लगभग इतना रह सकता है।",
+                 "ur": "بارش کم ہو، کیڑے لگ جائیں یا منڈی بھاؤ گر جائے۔ تب منافع گھٹ کر تقریباً اتنا رہ سکتا ہے۔",
+                 "bho": "बरखा कम होखे, कीड़ा लाग जाव भा मंडी भाव गिर जाव। तब मुनाफा घट के लगभग एतना रह सकेला।",
+                 "awa": "बरखा कम होय, कीड़ा लागि जाय या मंडी भाव गिरि जाय। तब मुनाफा घटि कै लगभग एतना रहि सकत है।"},
+    "year_good": {"en": "The weather is kind, the crop is healthy and the mandi price is high. Your profit may rise to about this amount.",
+                  "hi": "मौसम साथ दे, फसल अच्छी हो और मंडी भाव ऊँचा मिले। तब मुनाफ़ा बढ़कर लगभग इतना हो सकता है।",
+                  "ur": "موسم ساتھ دے، فصل اچھی ہو اور منڈی بھاؤ اونچا ملے۔ تب منافع بڑھ کر تقریباً اتنا ہو سکتا ہے۔",
+                  "bho": "मौसम साथ देव, फसल बढ़िया होखे आ मंडी भाव ऊँच मिले। तब मुनाफा बढ़ के लगभग एतना हो सकेला।",
+                  "awa": "मौसम साथ देय, फसल नीक होय अउर मंडी भाव ऊँच मिलै। तब मुनाफा बढ़ि कै लगभग एतना होइ सकत है।"},
+    "year_between": {"en": "Most years (about 8 out of 10) fall between these two. The big number on each card is what to expect in a normal year.",
+                     "hi": "ज़्यादातर साल (10 में से लगभग 8) इन दोनों के बीच रहते हैं। हर कार्ड की बड़ी संख्या सामान्य साल का अनुमान है।",
+                     "ur": "زیادہ تر سال (10 میں سے تقریباً 8) ان دونوں کے درمیان رہتے ہیں۔ ہر کارڈ کا بڑا عدد عام سال کا اندازہ ہے۔",
+                     "bho": "जादातर साल (10 में से लगभग 8) ए दुनो के बीच रहेला। हर कार्ड के बड़का संख्या सामान्य साल के अनुमान बा।",
+                     "awa": "जादातर साल (10 मा से लगभग 8) इन दूनौ के बीच रहत हैं। हर कार्ड कै बड़ी संख्या सामान्य साल कै अनुमान है।"},
+    "schemes_title": {"en": "Government schemes for farmers", "hi": "किसानों के लिए सरकारी योजनाएँ", "ur": "کسانوں کے لیے سرکاری اسکیمیں"},
+    "schemes_intro": {"en": "Move the pointer over a scheme (or touch it) to see a short note. Click it to read more and to go to the official website.",
+                      "hi": "किसी योजना पर माउस ले जाएँ (या छुएँ) तो छोटी जानकारी दिखेगी। पूरी जानकारी और आधिकारिक वेबसाइट के लिए उस पर क्लिक करें।",
+                      "ur": "کسی اسکیم پر ماؤس لے جائیں (یا چھوئیں) تو مختصر معلومات دکھے گی۔ پوری معلومات اور سرکاری ویب سائٹ کے لیے اس پر کلک کریں۔"},
+    "scheme_more": {"en": "Click to know more", "hi": "और जानने के लिए क्लिक करें", "ur": "مزید جاننے کے لیے کلک کریں"},
+    "scheme_benefit": {"en": "What you get", "hi": "आपको क्या मिलता है", "ur": "آپ کو کیا ملتا ہے"},
+    "scheme_who": {"en": "Who can apply", "hi": "कौन आवेदन कर सकता है", "ur": "کون درخواست دے سکتا ہے"},
+    "scheme_how": {"en": "How to apply", "hi": "आवेदन कैसे करें", "ur": "درخواست کیسے دیں"},
+    "scheme_visit": {"en": "Go to the official website", "hi": "आधिकारिक वेबसाइट पर जाएँ", "ur": "سرکاری ویب سائٹ پر جائیں"},
+    "scheme_back": {"en": "Back to all schemes", "hi": "सभी योजनाओं पर वापस", "ur": "تمام اسکیموں پر واپس"},
+    "schemes_note": {"en": "Amounts and rules change. Always confirm on the official website, and never pay anyone to apply.",
+                     "hi": "रक़म और नियम बदलते रहते हैं। हमेशा आधिकारिक वेबसाइट पर पुष्टि करें, और आवेदन के लिए किसी को पैसे न दें।",
+                     "ur": "رقم اور قواعد بدلتے رہتے ہیں۔ ہمیشہ سرکاری ویب سائٹ پر تصدیق کریں، اور درخواست کے لیے کسی کو پیسے نہ دیں۔"},
+})
+
+
 SEASONS = {
     "Kharif": {"en": "Kharif (sown June-July)", "hi": "खरीफ़ (बुवाई जून-जुलाई)", "ur": "خریف (بوائی جون-جولائی)"},
     "Rabi": {"en": "Rabi (sown October-November)", "hi": "रबी (बुवाई अक्टूबर-नवंबर)", "ur": "ربیع (بوائی اکتوبر-نومبر)"},
@@ -280,7 +360,11 @@ def t(key: str, lang: str, **values) -> str:
 
 
 def crop_name(crop: str, lang: str) -> str:
-    return pick(CROPS[crop], lang) if crop in CROPS else crop
+    """The crop's name in the chosen language; the Hindi name is added where the language is not written in Devanagari."""
+    if crop not in CROPS:
+        return crop
+    name = pick(CROPS[crop], lang)
+    return name if lang in ("hi", "bho", "awa") else f"{name} · {CROPS[crop]['hi']}"
 
 
 def season_name(season: str, lang: str) -> str:

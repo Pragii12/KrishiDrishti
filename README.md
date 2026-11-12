@@ -12,7 +12,7 @@ This is a prototype. The figures are district averages, not a forecast for a sin
 
 | Folder | Contents |
 |---|---|
-| `app/` | The Streamlit web application (`app.py`) and its words in every language (`texts.py`) |
+| `app/` | The Streamlit web application (`app.py`), its words in every language (`texts.py`) and the schemes (`schemes.py`) |
 | `notebooks/` | The four notebooks, numbered in the order they are run |
 | `src/` | `predict.py` (the only file an application calls), `rules.py`, `history.py` |
 | `models/` | Saved models and tables written by the notebooks |
@@ -44,10 +44,14 @@ training years.
 streamlit run app/app.py
 ```
 
-A single page for farmers: choose the district and season, enter the land size and whether the
-field can be irrigated, and see the three best crops with their expected profit in a bad and a
-good year. Languages: English, Hindi, Urdu, Bhojpuri and Awadhi. Adding `?lang=hi` (or `ur`,
-`bho`, `awa`) to the address opens it in that language.
+Three pages with a navigation bar: Home (what the prototype is), Find Best Crop (district,
+season, land size and irrigation give the three best crops with their profit in a bad and a good
+year) and Farmer Schemes (eight central schemes with links to their official websites).
+Languages: English, Hindi, Urdu, Bhojpuri and Awadhi. The page and language are kept in the
+address, for example `?page=crops&lang=hi`.
+
+This is a student prototype and not an official Government website. Its recommendations are
+estimates for information only.
 
 ## Using the models
 
