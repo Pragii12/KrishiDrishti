@@ -1,0 +1,40 @@
+crop,crop_group,lus_irrigation_crop,mandi_commodity
+Rice,Cereals,Kharif: Rice|Autumn; Summer: Rice|Summer,Paddy(Dhan)(Common); Paddy(Common)
+Wheat,Cereals,Rabi: Wheat,Wheat
+Maize,Cereals,*: Maize,Maize
+Bajra,Cereals,Kharif: Bajra,Bajra(Pearl Millet/Cumbu)
+Jowar,Cereals,Kharif: Jowar|Kharif,Jowar(Sorghum)
+Barley,Cereals,Rabi: Barley,Barley (Jau); Barley(Jau)
+Ragi,Cereals,,
+Small millets,Cereals,,
+Arhar/Tur,Pulses,Kharif: Arhar(Tur),Arhar (Tur/Red Gram)(Whole); Arhar(Tur/Red Gram)(Whole); Red gram/Arhar/Tur(whole)
+Gram,Pulses,Rabi: Gram,Bengal Gram(Gram)(Whole)
+Masoor,Pulses,Rabi: Other Pulses|Rabi,Lentil (Masur)(Whole); Lentil(Masur)(Whole)
+Moong(Green Gram),Pulses,Kharif: Other Pulses|Kharif; Rabi: Other Pulses|Rabi,Green Gram (Moong)(Whole); Green Gram(Moong)(Whole)
+Urad,Pulses,Kharif: Other Pulses|Kharif; Rabi: Other Pulses|Rabi,Black Gram (Urd Beans)(Whole); Black Gram(Urd Beans)(Whole)
+Moth,Pulses,Kharif: Other Pulses|Kharif,
+Peas & beans (Pulses),Pulses,Rabi: Other Pulses|Rabi,Peas(Dry)
+Other Kharif pulses,Pulses,Kharif: Other Pulses|Kharif,
+Other  Rabi pulses,Pulses,Rabi: Other Pulses|Rabi,
+Rapeseed &Mustard,Oilseeds,Rabi: Rapeseed and Mustard,Mustard
+Sesamum,Oilseeds,Kharif: Sesamum,"Sesamum(Sesame,Gingelly,Til)"
+Groundnut,Oilseeds,Kharif: Groundnut,
+Linseed,Oilseeds,Rabi: Linseed,
+Soyabean,Oilseeds,,
+Sunflower,Oilseeds,*: Sunflower,
+Castor seed,Oilseeds,,
+Sugarcane,Cash crops,*: Sugarcane,
+Cotton(lint),Cash crops,,
+Jute,Cash crops,,
+Sannhamp,Cash crops,,
+Tobacco,Cash crops,*: Tobacco,
+Guar seed,Cash crops,,
+Potato,Vegetables & spices,,Potato
+Onion,Vegetables & spices,,
+Garlic,Vegetables & spices,,
+Sweet potato,Vegetables & spices,,
+Banana,Vegetables & spices,,
+Coriander,Vegetables & spices,,
+Dry chillies,Vegetables & spices,,
+Ginger,Vegetables & spices,,
+Turmeric,Vegetables & spices,,

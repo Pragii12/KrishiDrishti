@@ -1,0 +1,72 @@
+column,group,source,meaning,caution,missing_pct
+crop_year,key,DES,"Agricultural year, e.g. 2015-16 (Jul 2015 - Jun 2016)",,0.0
+crop_year_start,key,DES,First calendar year of the crop year,,0.0
+district,key,district_master,Standard (DES) district name,drop before training,0.0
+season,key,DES,Kharif / Rabi / Summer / Whole Year,,0.0
+crop,key,DES,Crop name (DES spelling),,0.0
+area_ha,crop statistics,DES / UPAg,"Area under the crop, hectares",LEAKAGE: yield is computed from it,0.0
+production_t,crop statistics,DES / UPAg,"Production, tonnes",LEAKAGE: yield is computed from it,0.3
+yield_t_per_ha,TARGET,DES / UPAg,"Yield, tonnes per hectare (as published)",target of the yield model,0.0
+data_source,crop statistics,,Which source the crop row came from,drop before training,0.0
+crop_group,key,crop_master,"Cereals, Pulses, Oilseeds, Cash crops, Vegetables & spices",,0.0
+loc_hq_latitude,location,geocoder,Latitude/longitude of the district HQ town,,0.0
+loc_hq_longitude,location,geocoder,Latitude/longitude of the district HQ town,,0.0
+w_rain_total_mm,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_rainy_days,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_heavy_rain_days,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_max_1day_rain_mm,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_temp_mean_c,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_tmax_mean_c,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_tmin_mean_c,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_hot_days_tmax_ge_35,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_hot_days_tmax_ge_40,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_cold_days_tmin_le_5,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_frost_risk_days_tmin_le_2,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_humidity_mean_pct,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_solar_mean_mj_m2_day,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_soil_wetness_surface_0to1,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+w_soil_wetness_root_zone_0to1,weather,NASA POWER daily (soil wetness: external package),"Season weather; window for crop year Y: Kharif Jun-Oct Y, Rabi Nov Y-Mar Y+1, Summer Apr-Jun Y+1, Whole Year Jul Y-Jun Y+1",,0.0
+soil_samples_tested,soil,Soil Health Card API,"Soil samples tested, 2023-24 to 2025-26",static per district,0.0
+soil_n_high_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_n_low_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_n_medium_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_p_high_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_p_low_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_p_medium_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_k_high_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_k_low_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_k_medium_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_oc_high_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_oc_low_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_oc_medium_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_ph_alkaline_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_ph_acidic_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_ph_neutral_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_ec_saline_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_s_deficient_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_zn_deficient_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_fe_deficient_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_cu_deficient_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_b_deficient_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_mn_deficient_share,soil,Soil Health Card API,"Share (0-1) of tested samples in the class, cycles 2023-24 to 2025-26 pooled",static per district,0.0
+soil_villages_tested,soil,external package,Villages with soil tests,static per district,0.0
+soil_village_sd_n_low_pct,soil,"external package (village level, 2023-25)",Standard deviation across villages of the % of samples in a class,static per district,0.0
+soil_village_sd_p_low_pct,soil,"external package (village level, 2023-25)",Standard deviation across villages of the % of samples in a class,static per district,0.0
+soil_village_sd_k_low_pct,soil,"external package (village level, 2023-25)",Standard deviation across villages of the % of samples in a class,static per district,0.0
+soil_village_sd_oc_low_pct,soil,"external package (village level, 2023-25)",Standard deviation across villages of the % of samples in a class,static per district,0.0
+soil_village_sd_zn_deficient_pct,soil,"external package (village level, 2023-25)",Standard deviation across villages of the % of samples in a class,static per district,0.0
+soil_village_sd_ph_alkaline_pct,soil,"external package (village level, 2023-25)",Standard deviation across villages of the % of samples in a class,static per district,0.0
+irr_net_irrigated_area_ha,irrigation,DES Land Use Statistics,"District net/gross irrigated area and net irrigated area by source, ha",,3.9
+irr_gross_irrigated_area_ha,irrigation,DES Land Use Statistics,"District net/gross irrigated area and net irrigated area by source, ha",,3.9
+irr_nia_canal_ha,irrigation,DES Land Use Statistics,"District net/gross irrigated area and net irrigated area by source, ha",,3.9
+irr_nia_tank_ha,irrigation,DES Land Use Statistics,"District net/gross irrigated area and net irrigated area by source, ha",,3.9
+irr_nia_tubewell_ha,irrigation,DES Land Use Statistics,"District net/gross irrigated area and net irrigated area by source, ha",,3.9
+irr_nia_other_wells_ha,irrigation,DES Land Use Statistics,"District net/gross irrigated area and net irrigated area by source, ha",,3.9
+irr_nia_other_sources_ha,irrigation,DES Land Use Statistics,"District net/gross irrigated area and net irrigated area by source, ha",,3.9
+land_net_sown_area_ha,land use,DES Land Use Statistics,"District net sown area and gross cropped area, ha",,3.9
+land_gross_cropped_area_ha,land use,DES Land Use Statistics,"District net sown area and gross cropped area, ha",,3.9
+irr_lus_crop_area_ha,irrigation,DES Land Use Statistics,"Area / irrigated area of this crop (or its LUS group) in the district, ha",LUS area differs a little from DES area,36.2
+irr_lus_crop_irrigated_ha,irrigation,DES Land Use Statistics,"Area / irrigated area of this crop (or its LUS group) in the district, ha",LUS area differs a little from DES area,36.2
+price_harvest_district_median,price,Agmarknet,"Median daily modal price (Rs/quintal) in the district's mandis in the harvest window: Kharif Oct-Dec Y, Rabi Mar-May Y+1, Summer Jun-Aug Y+1",LEAKAGE for the yield model (known only after harvest),79.2
+price_harvest_district_records,price,Agmarknet,"Median daily modal price (Rs/quintal) in the district's mandis in the harvest window: Kharif Oct-Dec Y, Rabi Mar-May Y+1, Summer Jun-Aug Y+1",LEAKAGE for the yield model (known only after harvest),79.2
+price_harvest_state_median,price,Agmarknet,"Same, all UP mandis together",LEAKAGE for the yield model (known only after harvest),49.3
