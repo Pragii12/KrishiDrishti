@@ -102,13 +102,24 @@ h3 {{ color: {DARK_GREEN}; border-bottom: 3px solid {GREEN}; padding-bottom: 4px
 .kd-risk {{ background: {PALE_AMBER}; color: {AMBER}; }}
 .kd-note {{ color: #4b5563; font-size: 0.92rem; margin-top: 8px; }}
 .kd-schemes {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; margin: 14px 0; }}
-.kd-scheme {{ position: relative; overflow: hidden; display: block; height: 200px; background: #ffffff; border: 1px solid #d1d5db;
-              border-top: 6px solid {GREEN}; border-radius: 10px; padding: 18px 16px; color: #111827 !important;
+.kd-scheme {{ position: relative; overflow: hidden; display: block; height: 230px; background: #ffffff; border: 1px solid #d1d5db;
+              border-top: 6px solid {GREEN}; border-radius: 10px; color: #111827 !important;
               transition: box-shadow 0.2s, transform 0.2s; }}
+.kd-scene {{ position: relative; overflow: hidden; height: 140px; }}
+.kd-scene::before, .kd-scene::after {{ content: ""; position: absolute; border-radius: 50%; }}
+.kd-scene::before {{ left: -30%; width: 110%; bottom: -70px; height: 120px; opacity: 0.55; }}
+.kd-scene::after {{ left: 10%; width: 120%; bottom: -84px; height: 120px; }}
+.kd-scene span {{ position: absolute; z-index: 1; line-height: 1; }}
+.kd-scene .kd-main {{ font-size: 3.6rem; left: 18px; bottom: 22px; }}
+.kd-scene .kd-side {{ font-size: 2.4rem; right: 18px; top: 14px; }}
+.kd-scene .kd-row {{ font-size: 1.3rem; right: 10px; bottom: 4px; letter-spacing: 6px; }}
+.kd-scene-wide {{ height: 170px; border-radius: 8px; margin-bottom: 14px; }}
+.kd-scene-wide .kd-main {{ font-size: 4.6rem; left: 30px; }}
+.kd-scene-wide .kd-side {{ font-size: 3rem; right: 30px; }}
 .kd-scheme:hover {{ box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); transform: translateY(-3px); }}
 .kd-scheme-icon {{ width: 64px; height: 64px; border-radius: 50%; background: {PALE_GREEN}; border: 2px solid #bbf7d0;
                    display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 14px; }}
-.kd-scheme-name {{ font-size: 1.15rem; font-weight: 700; line-height: 1.3; }}
+.kd-scheme-name {{ font-size: 1.12rem; font-weight: 700; line-height: 1.3; padding: 12px 14px; }}
 .kd-slide {{ position: absolute; left: 0; right: 0; bottom: 0; height: 100%; background: {DARK_GREEN}; color: #ffffff;
              padding: 18px 16px; transform: translateY(101%); transition: transform 0.3s ease; display: flex;
              flex-direction: column; justify-content: space-between; }}
@@ -120,14 +131,16 @@ h3 {{ color: {DARK_GREEN}; border-bottom: 3px solid {GREEN}; padding-bottom: 4px
 .kd-detail-head .kd-scheme-icon {{ margin: 0; flex-shrink: 0; }}
 .kd-detail-head h2 {{ border: 0; margin: 0; padding: 0; }}
 .kd-detail b {{ color: {DARK_GREEN}; font-size: 1.08rem; display: block; margin-top: 12px; }}
-.kd-foot {{ background: {NAVY}; color: #e5e7eb; font-size: 0.9rem; border-radius: 0 0 6px 6px; margin-top: 28px; padding: 14px 18px; }}
-.kd-foot b {{ color: #ffffff; }}
 div.stButton > button {{ background: {GREEN}; color: #ffffff; border: 0; padding: 0.7rem 1rem; }}
 div.stButton > button p {{ font-size: 1.15rem; font-weight: 700; }}
 div.stButton > button:hover, div.stButton > button:focus {{ background: {DARK_GREEN}; color: #ffffff; }}
 label, .stRadio p, .stCheckbox p {{ font-size: 1.02rem !important; }}
 </style>
 """
+SCENE_STYLE = "<style>" + "".join(
+    f'.kd-scene-{item["id"]} {{ background: linear-gradient({item["scene"]["sky"]}, {item["scene"]["sky_low"]}); }}'
+    f'.kd-scene-{item["id"]}::before, .kd-scene-{item["id"]}::after {{ background: {item["scene"]["ground"]}; }}'
+    for item in SCHEMES) + "</style>"
 
 
 def html(markup: str) -> None:
@@ -175,10 +188,6 @@ def header(page: str, lang: str) -> None:
     items = "".join(f'<a href="{link(name, lang)}" target="_self" class="{"kd-active" if name == page else ""}">'
                     f'{t("nav_" + name, lang)}</a>' for name in PAGES)
     html(f'<div class="kd-nav">{items}</div>')
-
-
-def footer(lang: str) -> None:
-    html(f'<div class="kd-foot"><b>{t("title", lang)}</b> · {t("not_official", lang)}<br>{t("footer", lang)}</div>')
 
 
 def home_page(lang: str) -> None:
@@ -315,22 +324,31 @@ def crops_page(lang: str) -> None:
          f'<li>{t("read_3", lang)}</li></ol></div>')
 
 
+def scene(item: dict, wide: bool = False) -> str:
+    """The drawn picture of a scheme: sky, two hills and three symbols."""
+    picture = item["scene"]
+    return (f'<div class="kd-scene kd-scene-{item["id"]}{" kd-scene-wide" if wide else ""}">'
+            f'<span class="kd-main">{picture["main"]}</span><span class="kd-side">{picture["side"]}</span>'
+            f'<span class="kd-row">{picture["row"] * 4}</span></div>')
+
+
 def schemes_page(lang: str, chosen: str | None) -> None:
+    html(SCENE_STYLE)
     scheme = next((item for item in SCHEMES if item["id"] == chosen), None)
     if scheme is not None:
         html(f'<a class="kd-btn kd-btn-green" href="{link("schemes", lang)}" target="_self">{t("scheme_back", lang)}</a>')
         parts = "".join(f'<b>{t(key, lang)}</b>{pick(scheme[field], lang)}'
                         for key, field in [("scheme_benefit", "benefit"), ("scheme_who", "who"), ("scheme_how", "how")])
-        html(f'<div class="kd-section kd-detail"><div class="kd-detail-head"><div class="kd-scheme-icon">{scheme["icon"]}</div>'
+        html(f'<div class="kd-section kd-detail">{scene(scheme, wide=True)}<div class="kd-detail-head">'
              f'<h2>{pick(scheme["name"], lang)}</h2></div><p>{pick(scheme["short"], lang)}</p>{parts}</div>')
         st.link_button(f'{t("scheme_visit", lang)}: {scheme["url"]}', scheme["url"], type="primary", width="stretch")
         html(f'<div class="kd-warning"><div class="kd-sign">⚠️</div><div>{t("schemes_note", lang)}</div></div>')
         return
 
-    html(f'<div class="kd-section"><h2>{t("schemes_title", lang)}</h2><p>{t("schemes_intro", lang)}</p></div>')
+    st.markdown(f"### {t('schemes_title', lang)}")
     cards = "".join(
         f'<a class="kd-scheme" href="{link("schemes", lang, scheme=item["id"])}" target="_self">'
-        f'<div class="kd-scheme-icon">{item["icon"]}</div><div class="kd-scheme-name">{pick(item["name"], lang)}</div>'
+        f'{scene(item)}<div class="kd-scheme-name">{pick(item["name"], lang)}</div>'
         f'<div class="kd-slide"><div><b>{pick(item["name"], lang)}</b><p>{pick(item["short"], lang)}</p></div>'
         f'<span>{t("scheme_more", lang)}</span></div></a>' for item in SCHEMES)
     html(f'<div class="kd-schemes">{cards}</div>')
@@ -353,4 +371,3 @@ elif page == "schemes":
     schemes_page(lang, st.query_params.get("scheme"))
 else:
     home_page(lang)
-footer(lang)

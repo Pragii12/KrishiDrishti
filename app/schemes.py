@@ -2,12 +2,15 @@
 
 The descriptions are short summaries typed in for this prototype. Amounts and rules change,
 so every scheme links to its official website, which is the source to trust.
+The picture of each scheme is drawn by the application from its "scene" (sky and ground colours
+and three symbols); no official logo or photograph is used.
 Languages: English, Hindi and Urdu (Bhojpuri and Awadhi readers see the Hindi text).
 """
 
 SCHEMES = [
     {
-        "id": "pmkisan", "icon": "💰", "url": "https://pmkisan.gov.in/",
+        "id": "pmkisan", "icon": "💰",
+        "scene": {"sky": "#fde68a", "sky_low": "#fef9c3", "ground": "#65a30d", "main": "👨‍🌾", "side": "💰", "row": "🌾"}, "url": "https://pmkisan.gov.in/",
         "name": {"en": "PM-KISAN", "hi": "पीएम-किसान सम्मान निधि", "ur": "پی ایم کسان سمان ندھی"},
         "short": {"en": "₹6,000 a year sent straight to the farmer's bank account.",
                   "hi": "हर साल ₹6,000 सीधे किसान के बैंक खाते में।",
@@ -23,7 +26,8 @@ SCHEMES = [
                 "ur": "ویب سائٹ پر یا جن سیوا کیندر میں آدھار، زمین کے کاغذ اور بینک پاس بک کے ساتھ رجسٹریشن کریں۔ ای-کے وائی سی مکمل کریں۔"},
     },
     {
-        "id": "pmfby", "icon": "🛡️", "url": "https://pmfby.gov.in/",
+        "id": "pmfby", "icon": "🛡️",
+        "scene": {"sky": "#94a3b8", "sky_low": "#e2e8f0", "ground": "#4d7c0f", "main": "🛡️", "side": "🌧️", "row": "🌾"}, "url": "https://pmfby.gov.in/",
         "name": {"en": "PM Fasal Bima Yojana", "hi": "प्रधानमंत्री फसल बीमा योजना", "ur": "پردھان منتری فصل بیمہ یوجنا"},
         "short": {"en": "Crop insurance against drought, flood, hail and pests.",
                   "hi": "सूखा, बाढ़, ओला और कीट से फसल का बीमा।",
@@ -39,7 +43,8 @@ SCHEMES = [
                 "ur": "موسم کی آخری تاریخ سے پہلے اپنے بینک، جن سیوا کیندر یا ویب سائٹ سے درخواست دیں۔"},
     },
     {
-        "id": "kcc", "icon": "💳", "url": "https://www.myscheme.gov.in/schemes/kcc",
+        "id": "kcc", "icon": "💳",
+        "scene": {"sky": "#99f6e4", "sky_low": "#f0fdfa", "ground": "#15803d", "main": "💳", "side": "🏦", "row": "🌱"}, "url": "https://www.myscheme.gov.in/schemes/kcc",
         "name": {"en": "Kisan Credit Card", "hi": "किसान क्रेडिट कार्ड", "ur": "کسان کریڈٹ کارڈ"},
         "short": {"en": "Low-interest loan for seed, fertiliser and other farm costs.",
                   "hi": "बीज, खाद और खेती के दूसरे ख़र्चों के लिए कम ब्याज पर क़र्ज़।",
@@ -55,7 +60,8 @@ SCHEMES = [
                 "ur": "اپنی بینک شاخ میں زمین کے کاغذ، آدھار اور تصویر کے ساتھ درخواست دیں۔"},
     },
     {
-        "id": "shc", "icon": "🧪", "url": "https://soilhealth.dac.gov.in/",
+        "id": "shc", "icon": "🧪",
+        "scene": {"sky": "#bae6fd", "sky_low": "#f0f9ff", "ground": "#92400e", "main": "🧪", "side": "🔬", "row": "🌱"}, "url": "https://soilhealth.dac.gov.in/",
         "name": {"en": "Soil Health Card", "hi": "मृदा स्वास्थ्य कार्ड", "ur": "سوائل ہیلتھ کارڈ"},
         "short": {"en": "Free soil test and advice on how much fertiliser to use.",
                   "hi": "मिट्टी की मुफ़्त जाँच और कितनी खाद डालें इसकी सलाह।",
@@ -69,7 +75,8 @@ SCHEMES = [
                 "ur": "اپنے بلاک زرعی دفتر یا قریبی مٹی جانچ لیبارٹری سے رابطہ کریں۔"},
     },
     {
-        "id": "pmksy", "icon": "💧", "url": "https://pmksy.gov.in/",
+        "id": "pmksy", "icon": "💧",
+        "scene": {"sky": "#7dd3fc", "sky_low": "#e0f2fe", "ground": "#16a34a", "main": "💧", "side": "🚿", "row": "🌱"}, "url": "https://pmksy.gov.in/",
         "name": {"en": "PM Krishi Sinchayee Yojana", "hi": "प्रधानमंत्री कृषि सिंचाई योजना", "ur": "پردھان منتری کرشی سینچائی یوجنا"},
         "short": {"en": "Subsidy on drip and sprinkler irrigation: more crop per drop.",
                   "hi": "ड्रिप और स्प्रिंकलर सिंचाई पर अनुदान: हर बूँद से ज़्यादा फसल।",
@@ -85,7 +92,8 @@ SCHEMES = [
                 "ur": "ریاست کے زرعی یا باغبانی محکمے کے ذریعے درخواست دیں۔"},
     },
     {
-        "id": "kusum", "icon": "☀️", "url": "https://pmkusum.mnre.gov.in/",
+        "id": "kusum", "icon": "☀️",
+        "scene": {"sky": "#fdba74", "sky_low": "#fff7ed", "ground": "#4d7c0f", "main": "☀️", "side": "🔆", "row": "🌾"}, "url": "https://pmkusum.mnre.gov.in/",
         "name": {"en": "PM-KUSUM", "hi": "पीएम-कुसुम", "ur": "پی ایم کُسُم"},
         "short": {"en": "Subsidy to set up a solar pump for irrigation.",
                   "hi": "सिंचाई के लिए सोलर पंप लगाने पर अनुदान।",
@@ -101,7 +109,8 @@ SCHEMES = [
                 "ur": "سرکاری ویب سائٹ پر دیے گئے ریاستی پورٹل سے درخواست دیں۔ پیسے مانگنے والی نقلی ویب سائٹوں سے ہوشیار رہیں۔"},
     },
     {
-        "id": "enam", "icon": "🏪", "url": "https://enam.gov.in/web/",
+        "id": "enam", "icon": "🏪",
+        "scene": {"sky": "#c4b5fd", "sky_low": "#f5f3ff", "ground": "#ca8a04", "main": "🏪", "side": "📱", "row": "🧺"}, "url": "https://enam.gov.in/web/",
         "name": {"en": "e-NAM", "hi": "ई-नाम (राष्ट्रीय कृषि बाज़ार)", "ur": "ای-نام (قومی زرعی بازار)"},
         "short": {"en": "Sell your produce online to buyers in many mandis.",
                   "hi": "अपनी उपज कई मंडियों के ख़रीदारों को ऑनलाइन बेचें।",
@@ -117,7 +126,8 @@ SCHEMES = [
                 "ur": "ویب سائٹ یا موبائل ایپ پر، یا اپنی منڈی کے ای-نام کاؤنٹر پر رجسٹریشن کریں۔"},
     },
     {
-        "id": "pmkmy", "icon": "👴", "url": "https://maandhan.in/",
+        "id": "pmkmy", "icon": "👴",
+        "scene": {"sky": "#bbf7d0", "sky_low": "#f0fdf4", "ground": "#15803d", "main": "👴", "side": "🪙", "row": "🌳"}, "url": "https://maandhan.in/",
         "name": {"en": "PM Kisan Maan-Dhan Yojana", "hi": "प्रधानमंत्री किसान मान-धन योजना", "ur": "پردھان منتری کسان مان دھن یوجنا"},
         "short": {"en": "Pension of ₹3,000 a month after the age of 60.",
                   "hi": "60 साल की उम्र के बाद ₹3,000 महीने की पेंशन।",
