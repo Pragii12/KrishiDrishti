@@ -12,6 +12,7 @@ This is a prototype. The figures are district averages, not a forecast for a sin
 
 | Folder | Contents |
 |---|---|
+| `app/` | The Streamlit web application (`app.py`), its words in every language (`texts.py`) and the schemes (`schemes.py`) |
 | `notebooks/` | The four notebooks, numbered in the order they are run |
 | `src/` | `predict.py` (the only file an application calls), `rules.py`, `history.py` |
 | `models/` | Saved models and tables written by the notebooks |
@@ -36,6 +37,21 @@ training years.
 |---|---|---|
 | Yield | 2020-21 to 2024-25 | 76% (90% on the 11 reliable crops) |
 | Price | 2020-21 to 2025-26 | 88% |
+
+## Web application
+
+```
+streamlit run app/app.py
+```
+
+Three pages with a navigation bar: Home (what the prototype is), Find Best Crop (district,
+season, land size and irrigation give the three best crops with their profit in a bad and a good
+year) and Farmer Schemes (eight central schemes with links to their official websites).
+Languages: English, Hindi, Urdu, Bhojpuri and Awadhi. The page and language are kept in the
+address, for example `?page=crops&lang=hi`.
+
+This is a student prototype and not an official Government website. Its recommendations are
+estimates for information only.
 
 ## Using the models
 
@@ -71,3 +87,11 @@ Card scheme (soil), Government of India MSP notifications.
 - Potato prices are predicted poorly; 18 crops have a yield but no price.
 - The crop lists for saline and alkaline soil sensitivity were typed in and are not yet verified.
 - Yield is predicted for 2025-26, price and cost for 2026-27.
+
+## Scheme images
+
+The images on the Farmer Schemes page are in `app/images/schemes/` and come from the official
+websites of the schemes (pmfby.gov.in, fasalrin.gov.in, soilhealth.dac.gov.in, pdmc.da.gov.in,
+pmkusum.mnre.gov.in, enam.gov.in); the source is shown under each image. A scheme with no image
+file shows its icon. To add or change an image, put the file in that folder and set `image`,
+`fit` and `credit` for the scheme in `app/schemes.py`.
