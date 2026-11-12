@@ -1,0 +1,15 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Downloaded data is large and can be re-created with scripts/
+data/raw/
+data/external/
+district_crop_production.csv
+
+# Secrets
+.env
+.streamlit/secrets.toml
