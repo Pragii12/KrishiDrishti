@@ -127,7 +127,8 @@ SCHEMES = [
                 "ur": "ویب سائٹ یا موبائل ایپ پر، یا اپنی منڈی کے ای-نام کاؤنٹر پر رجسٹریشن کریں۔"},
     },
     {
-        "id": "pmkmy", "icon": "👴", "url": "https://maandhan.in/",
+        "id": "pmkmy", "icon": "👴",
+        "image": "pmkmy.jpg", "fit": "cover", "credit": "supplied by the project owner", "url": "https://maandhan.in/",
         "name": {"en": "PM Kisan Maan-Dhan Yojana", "hi": "प्रधानमंत्री किसान मान-धन योजना", "ur": "پردھان منتری کسان مان دھن یوجنا"},
         "short": {"en": "Pension of ₹3,000 a month after the age of 60.",
                   "hi": "60 साल की उम्र के बाद ₹3,000 महीने की पेंशन।",
