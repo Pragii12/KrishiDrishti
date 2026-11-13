@@ -218,7 +218,10 @@ def quintals_per_unit(crop: str, row: pd.Series, unit: str) -> float:
     return sold * 10 * (HECTARES_PER_ACRE if unit == "acre" else 1)
 
 
-def card(rank: int, crop: str, row: pd.Series, hectares: float, land_text: str, lang: str, unit: str) -> str:
+def card(rank: int, crop: str, row: pd.Series, lang: str, unit: str) -> str:
+    """One crop card; every money figure is for one acre or one hectare, whichever the farmer chose."""
+    hectares = HECTARES_PER_ACRE if unit == "acre" else 1
+    unit_text = t("per_unit", lang, unit=t(unit, lang).lower())
     risky = row["profit_range_low"] < 0
     tag = f'<div class="kd-tag {"kd-risk" if risky else "kd-safe"}">{t("tag_risk" if risky else "tag_safe", lang)}</div>'
     notes = notes_for(row["advice"], lang)
@@ -226,7 +229,7 @@ def card(rank: int, crop: str, row: pd.Series, hectares: float, land_text: str, 
         notes.append(t("less_certain", lang))
     notes_html = "".join(f'<div class="kd-note">• {note}</div>' for note in notes)
     return (f'<div class="kd-card"><div><span class="kd-rank">{rank}</span><span class="kd-crop">{crop_name(crop, lang)}</span></div>'
-            f'<div class="kd-label">{t("profit", lang)} {land_text}</div>'
+            f'<div class="kd-label">{t("profit", lang)} {unit_text}</div>'
             f'<div class="kd-profit">{rupees(row["profit_rs_per_ha"] * hectares)}</div>'
             f'<div class="kd-range"><div>{t("bad_year", lang)}<span>{rupees(row["profit_range_low"] * hectares)}</span></div>'
             f'<div>{t("good_year", lang)}<span>{rupees(row["profit_range_high"] * hectares)}</span></div></div>'
@@ -241,7 +244,9 @@ def years_box(lang: str) -> str:
             f'<p style="margin-top:10px">{t("year_between", lang)}</p></div>')
 
 
-def all_crops_table(table: pd.DataFrame, hectares: float, lang: str, unit: str) -> pd.DataFrame:
+def all_crops_table(table: pd.DataFrame, lang: str, unit: str) -> pd.DataFrame:
+    hectares = HECTARES_PER_ACRE if unit == "acre" else 1
+    unit_text = t("per_unit", lang, unit=t(unit, lang).lower())
     rows = []
     for crop, row in table.iterrows():
         has_profit = pd.notna(row.get("profit_rs_per_ha"))
@@ -254,7 +259,7 @@ def all_crops_table(table: pd.DataFrame, hectares: float, lang: str, unit: str) 
         rows.append({
             t("col_crop", lang): crop_name(crop, lang),
             t("col_yield", lang, unit=t(unit, lang).lower()): f"{quintals_per_unit(crop, row, unit):.1f}",
-            t("profit", lang): rupees(row["profit_rs_per_ha"] * hectares) if has_profit else "-",
+            f'{t("profit", lang)} {unit_text}': rupees(row["profit_rs_per_ha"] * hectares) if has_profit else "-",
             t("bad_year", lang): rupees(row["profit_range_low"] * hectares) if has_profit else "-",
             t("good_year", lang): rupees(row["profit_range_high"] * hectares) if has_profit else "-",
             t("col_remark", lang): remark,
@@ -274,10 +279,8 @@ def crops_page(lang: str) -> None:
         season_options = sorted(seasons(district), key=SEASON_ORDER.index)
         season = st.selectbox(t("season", lang), season_options, format_func=lambda s: season_name(s, lang))
 
-    left, middle, right = st.columns([2, 1, 3])
+    left, right = st.columns(2)
     with left:
-        land = st.number_input(t("land", lang), min_value=0.1, max_value=500.0, value=1.0, step=0.5)
-    with middle:
         unit = st.selectbox(t("unit", lang), ["acre", "hectare"], format_func=lambda u: t(u, lang))
     with right:
         watered = st.radio(t("water", lang), ["yes", "no"], format_func=lambda v: t(v, lang), horizontal=True)
@@ -292,13 +295,15 @@ def crops_page(lang: str) -> None:
         saline = st.checkbox(t("saline", lang))
         alkaline = st.checkbox(t("alkaline", lang))
 
+    # The result is shown only for the details the farmer has confirmed with the button.
+    # Changing any detail hides it again until the button is pressed once more.
+    details = (district, season, unit, watered, own_crop, own_yield, saline, alkaline)
     if st.button(t("button", lang), width="stretch"):
-        st.session_state["shown"] = True
-    if not st.session_state.get("shown"):
+        st.session_state["confirmed"] = details
+    if st.session_state.get("confirmed") != details:
         html(warning_box(lang))
         return
 
-    hectares = land * HECTARES_PER_ACRE if unit == "acre" else land
     farmer_yields = None
     if own_crop is not None and own_yield > 0:
         tonnes_per_ha = own_yield * TONNES_PER_HA_PER_QUINTAL_PER_ACRE
@@ -307,7 +312,6 @@ def crops_page(lang: str) -> None:
 
     table = recommend_crops(district, season, farmer_yields=farmer_yields, irrigated=watered == "yes", soil=soil)
     ranked = table[table["suitable"] & table["profit_rs_per_ha"].notna()] if "profit_rs_per_ha" in table else table.iloc[0:0]
-    land_text = t("on_land", lang, size=f"{land:g}", unit=t(unit, lang))
 
     st.markdown(f"### {t('result_title', lang)}")
     st.caption(f"{district_name(district, lang)} · {season_name(season, lang)}")
@@ -317,12 +321,12 @@ def crops_page(lang: str) -> None:
     else:
         top = ranked.head(TOP_CROPS)
         for column, (rank, (crop, row)) in zip(st.columns(len(top)), enumerate(top.iterrows(), start=1)):
-            column.markdown(card(rank, crop, row, hectares, land_text, lang, unit), unsafe_allow_html=True)
+            column.markdown(card(rank, crop, row, lang, unit), unsafe_allow_html=True)
         html(years_box(lang))
 
     if "profit_rs_per_ha" in table:
         with st.expander(t("all_crops", lang)):
-            st.dataframe(all_crops_table(table, hectares, lang, unit), hide_index=True, width="stretch")
+            st.dataframe(all_crops_table(table, lang, unit), hide_index=True, width="stretch")
 
     html(f'<div class="kd-steps"><b>{t("read_title", lang)}</b><ol><li>{t("read_1", lang)}</li>'
          f'<li>{t("read_3", lang)}</li></ol></div>')
