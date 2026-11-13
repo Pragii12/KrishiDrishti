@@ -38,6 +38,10 @@ training years.
 | Yield | 2020-21 to 2024-25 | 76% (90% on the 11 reliable crops) |
 | Price | 2020-21 to 2025-26 | 88% |
 
+The models that make the predictions are trained on the most recent 15 years only (yield
+2010-2024, price 2011-2025). Checked on the same test years, a 15-year training window gives
+75.7% for yield and 88.1% for price, against 76.3% and 88.2% with every training year.
+
 ## Web application
 
 ```
@@ -45,8 +49,9 @@ streamlit run app/app.py
 ```
 
 Three pages with a navigation bar: Home (what the prototype is), Find Best Crop (district,
-season, land size and irrigation give the three best crops with their profit in a bad and a good
-year) and Farmer Schemes (eight central schemes with links to their official websites).
+season and irrigation give the three best crops with their expected yield and their profit per
+acre or per hectare in a bad and a good year; the result appears only after the button is
+pressed) and Farmer Schemes (eight central schemes with links to their official websites).
 Languages: English, Hindi, Urdu, Bhojpuri and Awadhi. The page and language are kept in the
 address, for example `?page=crops&lang=hi`.
 
