@@ -99,6 +99,7 @@ h3 {{ color: {DARK_GREEN}; border-bottom: 3px solid {GREEN}; padding-bottom: 4px
 .kd-profit {{ font-size: 1.9rem; font-weight: 700; color: {DARK_GREEN}; line-height: 1.2; }}
 .kd-range {{ display: flex; gap: 8px; margin-top: 12px; }}
 .kd-range div {{ flex: 1; background: #f3f4f6; border-radius: 8px; padding: 8px 10px; font-size: 0.9rem; color: #4b5563; }}
+.kd-yield {{ margin: 12px 0 4px 0; font-size: 0.95rem; color: #374151; }}
 .kd-range span {{ display: block; font-size: 1.1rem; font-weight: 700; color: #111827; }}
 .kd-tag {{ border-radius: 8px; padding: 8px 10px; margin-top: 12px; font-weight: 600; font-size: 0.95rem; }}
 .kd-safe {{ background: {PALE_GREEN}; color: {DARK_GREEN}; }}
@@ -209,7 +210,15 @@ def notes_for(advice: str, lang: str) -> list[str]:
     return notes
 
 
-def card(rank: int, crop: str, row: pd.Series, hectares: float, land_text: str, lang: str) -> str:
+def quintals_per_unit(crop: str, row: pd.Series, unit: str) -> float:
+    """Expected quantity harvested (rice as paddy, as it is sold) in quintal per acre or per hectare."""
+    sold = row.get("sold_t_ha")
+    if pd.isna(sold):
+        sold = row["farm_predicted_t_ha"] * (1 / RICE_PER_PADDY if crop == "Rice" else 1)
+    return sold * 10 * (HECTARES_PER_ACRE if unit == "acre" else 1)
+
+
+def card(rank: int, crop: str, row: pd.Series, hectares: float, land_text: str, lang: str, unit: str) -> str:
     risky = row["profit_range_low"] < 0
     tag = f'<div class="kd-tag {"kd-risk" if risky else "kd-safe"}">{t("tag_risk" if risky else "tag_safe", lang)}</div>'
     notes = notes_for(row["advice"], lang)
@@ -221,6 +230,7 @@ def card(rank: int, crop: str, row: pd.Series, hectares: float, land_text: str, 
             f'<div class="kd-profit">{rupees(row["profit_rs_per_ha"] * hectares)}</div>'
             f'<div class="kd-range"><div>{t("bad_year", lang)}<span>{rupees(row["profit_range_low"] * hectares)}</span></div>'
             f'<div>{t("good_year", lang)}<span>{rupees(row["profit_range_high"] * hectares)}</span></div></div>'
+            f'<div class="kd-yield">{t("yield_line", lang, amount=f"{quintals_per_unit(crop, row, unit):.1f}", unit=t(unit, lang).lower())}</div>'
             f'{tag}{notes_html}</div>')
 
 
@@ -231,7 +241,7 @@ def years_box(lang: str) -> str:
             f'<p style="margin-top:10px">{t("year_between", lang)}</p></div>')
 
 
-def all_crops_table(table: pd.DataFrame, hectares: float, lang: str) -> pd.DataFrame:
+def all_crops_table(table: pd.DataFrame, hectares: float, lang: str, unit: str) -> pd.DataFrame:
     rows = []
     for crop, row in table.iterrows():
         has_profit = pd.notna(row.get("profit_rs_per_ha"))
@@ -243,6 +253,7 @@ def all_crops_table(table: pd.DataFrame, hectares: float, lang: str) -> pd.DataF
             remark = " ".join(notes_for(row["advice"], lang))
         rows.append({
             t("col_crop", lang): crop_name(crop, lang),
+            t("col_yield", lang, unit=t(unit, lang).lower()): f"{quintals_per_unit(crop, row, unit):.1f}",
             t("profit", lang): rupees(row["profit_rs_per_ha"] * hectares) if has_profit else "-",
             t("bad_year", lang): rupees(row["profit_range_low"] * hectares) if has_profit else "-",
             t("good_year", lang): rupees(row["profit_range_high"] * hectares) if has_profit else "-",
@@ -306,12 +317,12 @@ def crops_page(lang: str) -> None:
     else:
         top = ranked.head(TOP_CROPS)
         for column, (rank, (crop, row)) in zip(st.columns(len(top)), enumerate(top.iterrows(), start=1)):
-            column.markdown(card(rank, crop, row, hectares, land_text, lang), unsafe_allow_html=True)
+            column.markdown(card(rank, crop, row, hectares, land_text, lang, unit), unsafe_allow_html=True)
         html(years_box(lang))
 
     if "profit_rs_per_ha" in table:
         with st.expander(t("all_crops", lang)):
-            st.dataframe(all_crops_table(table, hectares, lang), hide_index=True, width="stretch")
+            st.dataframe(all_crops_table(table, hectares, lang, unit), hide_index=True, width="stretch")
 
     html(f'<div class="kd-steps"><b>{t("read_title", lang)}</b><ol><li>{t("read_1", lang)}</li>'
          f'<li>{t("read_3", lang)}</li></ol></div>')

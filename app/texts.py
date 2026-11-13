@@ -91,6 +91,20 @@ TEXT = {
     "result_title": {"en": "Best crops for you", "hi": "आपके लिए सबसे अच्छी फसलें", "ur": "آپ کے لیے بہترین فصلیں", "bho": "रउआ खातिर सबसे बढ़िया फसल", "awa": "आपके खातिर सबसे नीक फसल"},
     "profit": {"en": "Expected profit", "hi": "अनुमानित मुनाफ़ा", "ur": "متوقع منافع", "bho": "अनुमानित मुनाफा", "awa": "अनुमानित मुनाफा"},
     "on_land": {"en": "on your {size} {unit}", "hi": "आपके {size} {unit} पर", "ur": "آپ کے {size} {unit} پر", "bho": "रउआ के {size} {unit} पर", "awa": "आपके {size} {unit} पर"},
+    "yield_line": {
+        "en": "Expected yield: <b>{amount}</b> quintal per {unit}",
+        "hi": "अनुमानित उपज: <b>{amount}</b> क्विंटल प्रति {unit}",
+        "ur": "متوقع پیداوار: <b>{amount}</b> کوئنٹل فی {unit}",
+        "bho": "अनुमानित उपज: <b>{amount}</b> क्विंटल प्रति {unit}",
+        "awa": "अनुमानित उपज: <b>{amount}</b> क्विंटल प्रति {unit}",
+    },
+    "col_yield": {
+        "en": "Expected yield (quintal per {unit})",
+        "hi": "अनुमानित उपज (क्विंटल प्रति {unit})",
+        "ur": "متوقع پیداوار (کوئنٹل فی {unit})",
+        "bho": "अनुमानित उपज (क्विंटल प्रति {unit})",
+        "awa": "अनुमानित उपज (क्विंटल प्रति {unit})",
+    },
     "bad_year": {"en": "Bad year", "hi": "खराब साल", "ur": "خراب سال", "bho": "खराब साल", "awa": "खराब साल"},
     "good_year": {"en": "Good year", "hi": "अच्छा साल", "ur": "اچھا سال", "bho": "बढ़िया साल", "awa": "नीक साल"},
     "tag_safe": {
